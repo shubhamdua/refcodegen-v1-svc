@@ -6,20 +6,18 @@ import org.springframework.stereotype.Component;
 
 import com.sun.istack.NotNull;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Component
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class UserDto {
 
 	private String id;
 	
 	@NotNull
 	private String name;
+	
+	private String role;
 	
 	private String city;
 	

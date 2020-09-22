@@ -27,10 +27,10 @@ public class User {
 	@Column(name = "state")
 	private String state;
 	
-	@Column(name = "contact_no")
+	@Column(name = "contact_no", unique = true)
 	private String contactNo;
 	
-	@Column(name = "email_id")
+	@Column(name = "email_id", unique = true)
 	private String emailId;
 	
 	@Column(name = "linked_to")
