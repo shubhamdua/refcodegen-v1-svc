@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +18,8 @@ import com.wp.refcodegen.dto.UserDto;
 import com.wp.refcodegen.service.RefCodeGenService;
 
 @RestController
-@RequestMapping("rcg/v1/svc/")
+@RequestMapping("v1/svc/rcg")
+@CrossOrigin("http://localhost:9100")
 public class RefCodeGenController {
 	
 	@Autowired
@@ -29,8 +31,9 @@ public class RefCodeGenController {
 		return new ResponseEntity<>(userDto,HttpStatus.CREATED);
 	}
 	
-	@PostMapping("/create/provider")
-	public ResponseEntity<UserDto> createProvider(@RequestBody UserDto userDto){
+	@PostMapping("/agent/{agentId}/create/provider")
+	public ResponseEntity<UserDto> createProvider(@PathVariable("agentId") String agentId, @RequestBody UserDto userDto){
+		userDto.setLinkedTo(agentId);
 		userDto = refCodeGenService.createProvider(userDto);
 		return new ResponseEntity<>(userDto,HttpStatus.CREATED);
 	}
@@ -39,6 +42,12 @@ public class RefCodeGenController {
 	public ResponseEntity<List<UserDto>> fetchAllProvidersByAgentId(@PathVariable("agentId") String agentId){
 		List<UserDto> listOfProviders = refCodeGenService.fetchAllProvidersByAgentId(agentId);
 		return new ResponseEntity<>(listOfProviders,HttpStatus.OK);
+	}
+	
+	@GetMapping("/provider/{providerId}")
+	public ResponseEntity<UserDto> fetchProviderById(@PathVariable("providerId") String providerId){
+		UserDto provider = refCodeGenService.fetchProviderById(providerId);
+		return new ResponseEntity<>(provider,HttpStatus.OK);
 	}
 	
 	@PutMapping("/update/provider")

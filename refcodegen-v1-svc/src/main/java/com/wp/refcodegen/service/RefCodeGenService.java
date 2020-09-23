@@ -127,4 +127,15 @@ public class RefCodeGenService {
 		}
 	}
 
+	public UserDto fetchProviderById(String providerId) {
+		Optional<User> opProvider = userRepository.findById(providerId);
+		if(opProvider.isPresent()){
+			ModelMapper mapper = new ModelMapper();
+			return mapper.map(opProvider.get(), UserDto.class);
+		}
+		else{
+			throw new RecordNotFoundException("Provider Id: "+providerId+" doesn't exists!!");
+		}
+	}
+
 }
