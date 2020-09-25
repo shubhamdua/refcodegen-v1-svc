@@ -18,8 +18,8 @@ import com.wp.refcodegen.dto.UserDto;
 import com.wp.refcodegen.service.RefCodeGenService;
 
 @RestController
-@RequestMapping("v1/svc/rcg")
-@CrossOrigin("http://localhost:9100")
+@RequestMapping("/v1/svc/rcg")
+@CrossOrigin("http://localhost:4200")
 public class RefCodeGenController {
 	
 	@Autowired
